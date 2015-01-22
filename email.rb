@@ -16,11 +16,11 @@ module Jekyll
       reversed = encode(@email.each_char.to_a.reverse.join)
       obfuscated = encode(@email)
       "<script type=\"text/javascript\">" +
-      " document.write('<a style=\"#{STYLE}\" href=\"#{MAIL_TO}#{obfuscated}\">#{reversed}</a>');" + 
+      " document.write('<a style=\"#{STYLE}\" href=\"#{MAIL_TO}#{obfuscated}\">#{reversed}</a>');" +
       "</script>"
     end
 
-    private 
+    private
     def encode(str)
       str = str.gsub('@', '&#64;')
       str = str.gsub('.', '&#46;')

@@ -15,9 +15,7 @@ Copy 'email.rb' to your 'plugins directory'
 
 ## How it Works
 
-The plugin will render a small javascript block that performs an inline document.write. 
-It renders an email address with some characters encoded and in reverse order. It then
-uses CSS to re-reverse the email to display to the user.
+The plugin will render a small javascript block that performs an inline document.write. It renders an email address with some characters encoded and in reverse order. It then uses CSS to re-reverse the email to display to the user.
 
 For example this markdown:
 
