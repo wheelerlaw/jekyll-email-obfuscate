@@ -4,7 +4,7 @@ module Jekyll
 
     MAIL_TO = '&#109;&#97;&#105;&#108;&#116;&#111;&#58;'
     STYLE = 'unicode-bidi: bidi-override; direction: rtl;'
-    PARAMETER_SYNTAX = %r!address="(?<address_lit>[^"]+)"|address=(?<address_var>[^\S]+) style="(?<style>[^"]+)"!
+    PARAMETER_SYNTAX = %r!address="(?<address_lit>[^"]+)"|address=(?<address_var>[^\s]+) style="(?<style>[^"]+)"!
 
     def initialize(tag_name, text, tokens)
       super
