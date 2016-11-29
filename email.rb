@@ -4,10 +4,17 @@ module Jekyll
 
     MAIL_TO = '&#109;&#97;&#105;&#108;&#116;&#111;&#58;'
     STYLE = 'unicode-bidi: bidi-override; direction: rtl;'
+    PARAMETER_SYNTAX = %r!address="(?<address>[^"]+)" style="(?<style>[^"]+)"!
 
     def initialize(tag_name, text, tokens)
       super
-      @email = text.strip
+      matched = text.strip.match(PARAMETER_SYNTAX)
+      if matched
+        @email = matched['address'].strip
+        @style = matched['style'].strip
+      else
+        @email, @style = text.strip.split(%r!\s+!, 2)
+      end
     end
 
     def render(context)
@@ -15,9 +22,18 @@ module Jekyll
       # not work as expected.
       reversed = encode(@email.each_char.to_a.reverse.join)
       obfuscated = encode(@email)
-      "<script type=\"text/javascript\">" +
-      " document.write('<a style=\"#{STYLE}\" href=\"#{MAIL_TO}#{obfuscated}\">#{reversed}</a>');" +
-      "</script>"
+      if @style == "link"
+        "<script type=\"text/javascript\">" +
+            " document.write('<a style=\"#{STYLE}\" href=\"#{MAIL_TO}#{obfuscated}\">#{reversed}</a>');" +
+            "</script>"
+      elsif @style == "text"
+        "<script type=\"text/javascript\">" +
+            " document.write('<span style=\"#{STYLE}\">#{reversed}</span>');" +
+            "</script>"
+      else
+        raise ArgumentError, "Invalid style: #{@style}"
+      end
+
     end
 
     private
